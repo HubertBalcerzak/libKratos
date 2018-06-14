@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
 namespace LibKratos
@@ -11,27 +7,20 @@ namespace LibKratos
     {
 
         /// <summary>
-        /// Initializes Kratos with model from given file.
+        /// Initializes Kratos with model from given .mdpa file.
         /// </summary>
-        /// <param name="path">Path to model file.</param>
+        /// <param name="path">Path to the .mdpa model file.</param>
         public static void init(String path)
         {
             Native.Init(path);
         }
 
         /// <summary>
-        /// Updates node positions according to given coordinates.
+        /// Sets Kratos DISPLACEMENT variable for node with given id, so that its final position is equal to given xyz coordinates.
         /// </summary>
-        /// <remarks>
-        /// Coordinates of first node are (xCoordinates[0], yCoordinates[0], zCoordinates[0]).
-        /// </remarks>
-        /// <exception cref="System.ArgumentException">Thrown when paramenter arrays differ in length.</exception>
-        public static void updateNodePos(float[] xCoordinates, float[] yCoordinates, float[] zCoordinates)
+        public static void updateNodePos(int nodeId, float x, float y, float z)
         {
-            if (!(xCoordinates.Length == yCoordinates.Length && yCoordinates.Length == zCoordinates.Length))
-                throw new ArgumentException("Coordinate arrays must not have different length");
-
-            Native.UpdateNodesPos(xCoordinates, yCoordinates, zCoordinates);
+            Native.UpdateNodePos(nodeId, x, y, z);
         }
 
         /// <summary>
@@ -85,11 +74,8 @@ namespace LibKratos
         [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern void Init([MarshalAs(UnmanagedType.LPStr)]string path);
         
-        //[DllImport("kratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        //public static extern void InitFromExisting(float[] xCords, float[] yCords, float[] zCords, int modelSize);
-
         [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern void UpdateNodesPos(float[] xCoordinates, float[] yCoordinates, float[] zCoordinates);
+        public static extern void UpdateNodePos(int nodeId, float x, float y, float z);
 
         [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern void Calculate();

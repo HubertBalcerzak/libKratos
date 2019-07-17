@@ -1,33 +1,52 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace LibKratos
-{
-    public class Kratos
-    {
+namespace LibKratos {
+    public class Kratos {
+        private IntPtr _nativeInstance;
+
+        public Kratos() {
+            _nativeInstance = Native.CreateInstance();
+        }
 
         /// <summary>
-        /// Initializes Kratos with model from given .mdpa file.
+        /// Initializes Kratos with model from given .mdpa file and loads parameters file.
         /// </summary>
-        /// <param name="path">Path to the .mdpa model file.</param>
-        public static void init(String path)
-        {
-            Native.Init(path);
+        /// <param name="mdpaPath">Path to the .mdpa model file.</param>
+        /// <param name="parametersJsonPath">Path to the ProjectParameters.json file.</param>
+        public void Init(string mdpaPath, string parametersJsonPath) {
+            Native.Init(_nativeInstance, mdpaPath, parametersJsonPath);
+        }
+
+        /// <summary>
+        /// Initializes Kratos with model from given .mdpa file and default parameters.
+        /// </summary>
+        /// <param name="mdpaPath">Path to the .mdpa model file.</param>
+        public void InitWithMDPA(string mdpaPath) {
+            Native.InitWithMDPA(_nativeInstance, mdpaPath);
+        }
+
+
+        /// <summary>
+        /// Initializes Kratos with given project parameters file. Will load mdpa defined in parameters.
+        /// </summary>
+        /// <param name="parametersJsonPath">Path to the ProjectParameters.json file.</param>
+        public void InitWithSettings(string parametersJsonPath) {
+            Native.InitWithSettings(_nativeInstance, parametersJsonPath);
         }
 
         /// <summary>
         /// Sets Kratos DISPLACEMENT variable for node with given id, so that its final position is equal to given xyz coordinates.
         /// </summary>
-        public static void updateNodePos(int nodeId, float x, float y, float z)
-        {
-            Native.UpdateNodePos(nodeId, x, y, z);
+        public void UpdateNodePos(int nodeId, float x, float y, float z) {
+            Native.UpdateNodePos(_nativeInstance, nodeId, x, y, z);
         }
 
         /// <summary>
-        /// Executes simulation. Result can be retrieved with <see cref="getNodesPos(out float[], out float[], out float[])" method./>
+        /// Executes simulation. Result can be retrieved with <see cref="GetNodesPos" /> method.
         /// </summary>
-        public static void calculate() {
-            Native.Calculate();
+        public void Calculate() {
+            Native.Calculate(_nativeInstance);
         }
 
         /// <summary>
@@ -36,12 +55,12 @@ namespace LibKratos
         /// <remarks>
         /// Coordinates of first node are (xCoordinates[0], yCoordinates[0], zCoordinates[0]).
         /// </remarks>
-        public static void getNodesPos(out float[] xCoordinates, out float[] yCoordinates, out float[] zCoordinates) {
-            IntPtr pxValues = Native.GetXCoordinates();
-            IntPtr pyValues = Native.GetYCoordinates();
-            IntPtr pzValues = Native.GetZCoordinates();
+        public void GetNodesPos(out float[] xCoordinates, out float[] yCoordinates, out float[] zCoordinates) {
+            IntPtr pxValues = Native.GetXCoordinates(_nativeInstance);
+            IntPtr pyValues = Native.GetYCoordinates(_nativeInstance);
+            IntPtr pzValues = Native.GetZCoordinates(_nativeInstance);
 
-            int size = Native.GetNodesCount();
+            int size = Native.GetNodesCount(_nativeInstance);
             float[] xResult = new float[size];
             float[] yResult = new float[size];
             float[] zResult = new float[size];
@@ -58,9 +77,9 @@ namespace LibKratos
         /// <summary>
         /// Copies triangles of Kratos model into given array. Result length will always be a multiple of 3.
         /// </summary>
-        public static void getTriangles(out int[] triangles) {
-            IntPtr pTriangles = Native.GetTriangles();
-            int size = Native.GetTrianglesCount();
+        public void GetTriangles(out int[] triangles) {
+            IntPtr pTriangles = Native.GetTriangles(_nativeInstance);
+            int size = Native.GetTrianglesCount(_nativeInstance);
 
             int[] unmarshaled = new int[size * 3];
 
@@ -68,34 +87,5 @@ namespace LibKratos
 
             triangles = unmarshaled;
         }
-    }
-
-    public class Native {
-        [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern void Init([MarshalAs(UnmanagedType.LPStr)]string path);
-        
-        [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern void UpdateNodePos(int nodeId, float x, float y, float z);
-
-        [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern void Calculate();
-
-        [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr GetXCoordinates();
-
-        [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr GetYCoordinates();
-
-        [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr GetZCoordinates();
-
-        [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern int GetNodesCount();
-
-        [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr GetTriangles();
-
-        [DllImport("KratosWrapper.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern int GetTrianglesCount();
     }
 }

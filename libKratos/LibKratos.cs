@@ -87,5 +87,20 @@ namespace LibKratos {
 
             triangles = unmarshaled;
         }
+
+        //TODO documentation
+        public void EnableSurfaceReactionResults() {
+            Native.EnableSurfaceStressResults(_nativeInstance);
+        }
+
+
+        //TODO documentation
+        public void GetSurfaceStress(out float[] surfaceReactions) {
+            IntPtr pReactions = Native.GetSurfaceStress(_nativeInstance);
+            int size = Native.GetTrianglesCount(_nativeInstance);
+            float[] unmarshaled = new float[size];
+            Marshal.Copy(pReactions, unmarshaled, 0, size);
+            surfaceReactions = unmarshaled;
+        }
     }
 }

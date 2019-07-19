@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 
 namespace LibKratos {
-public class Native {
+    public class Native {
         [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr CreateInstance();
 
@@ -40,5 +40,11 @@ public class Native {
 
         [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetTrianglesCount(IntPtr instance);
+
+        [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern int EnableSurfaceStressResults(IntPtr instance);
+
+        [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern IntPtr GetSurfaceStress(IntPtr instance);
     }
 }

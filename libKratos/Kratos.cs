@@ -22,7 +22,7 @@ namespace LibKratos {
         /// Initializes Kratos with model from given .mdpa file and default parameters.
         /// </summary>
         /// <param name="mdpaPath">Path to the .mdpa model file.</param>
-        public void InitWithMDPA(string mdpaPath) {
+        public void InitWithMdpa(string mdpaPath) {
             Native.InitWithMDPA(_nativeInstance, mdpaPath);
         }
 

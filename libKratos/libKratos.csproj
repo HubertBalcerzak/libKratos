@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,9 +46,17 @@
     <Compile Include="Kratos.cs" />
     <Compile Include="Native.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utils" />
+    <Compile Include="Utils\Oct\IndexedVertex.cs" />
+    <Compile Include="Utils\Oct\Octree.cs" />
+    <Compile Include="Utils\Oct\OctreeInternalNode.cs" />
+    <Compile Include="Utils\Oct\OctreeLeaf.cs" />
+    <Compile Include="Utils\Oct\IOctreeNode.cs" />
+    <Compile Include="Utils\Quad\IndexedVertex2d.cs" />
+    <Compile Include="Utils\Quad\Quadtree.cs" />
+    <Compile Include="Utils\Quad\QuadtreeInternalNode.cs" />
+    <Compile Include="Utils\Quad\QuadtreeLeaf.cs" />
+    <Compile Include="Utils\Quad\QuadtreeNode.cs" />
+    <Compile Include="Utils\Quad\VertFilter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

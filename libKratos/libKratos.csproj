@@ -46,6 +46,9 @@
     <Compile Include="Kratos.cs" />
     <Compile Include="Native.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\Colors\IGradient.cs" />
+    <Compile Include="Utils\Colors\LinearGradient.cs" />
+    <Compile Include="Utils\Colors\LogarithmicGradient.cs" />
     <Compile Include="Utils\Oct\IndexedVertex.cs" />
     <Compile Include="Utils\Oct\Octree.cs" />
     <Compile Include="Utils\Oct\OctreeInternalNode.cs" />

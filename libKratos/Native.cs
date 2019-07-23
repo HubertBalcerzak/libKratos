@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 
 namespace LibKratos {
-    public class Native {
+    internal class Native {
         [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr CreateInstance();
 

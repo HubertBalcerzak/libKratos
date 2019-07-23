@@ -43,7 +43,7 @@ namespace LibKratos {
         }
 
         /// <summary>
-        /// Executes simulation. Result can be retrieved with <see cref="GetNodesPos" /> method.
+        /// Executes simulation. Result can be retrieved with <see cref="GetNodesPos" /> and <see cref="GetSurfaceStress"/> methods.
         /// </summary>
         public void Calculate() {
             Native.Calculate(_nativeInstance);
@@ -88,19 +88,27 @@ namespace LibKratos {
             triangles = unmarshaled;
         }
 
-        //TODO documentation
-        public void EnableSurfaceReactionResults() {
+        /// <summary>
+        /// Enables collecting of Von Misses stress variable after each simulation.
+        /// It can be then retrieved using <see cref="GetSurfaceStress"/> method
+        /// </summary>
+        public void EnableSurfaceStressResults() {
             Native.EnableSurfaceStressResults(_nativeInstance);
         }
 
 
-        //TODO documentation
-        public void GetSurfaceStress(out float[] surfaceReactions) {
+        /// <summary>
+        /// Retrieves Von Misses stress values from last simulation.
+        /// Before first invocation <see cref="EnableSurfaceStressResults"/> must be called.
+        ///  Returns one float for every triangle in the same order, as in <see cref="GetTriangles"/>.
+        /// </summary>
+        /// <param name="surfaceStresses">Results array.</param>
+        public void GetSurfaceStress(out float[] surfaceStresses) {
             IntPtr pReactions = Native.GetSurfaceStress(_nativeInstance);
             int size = Native.GetTrianglesCount(_nativeInstance);
             float[] unmarshaled = new float[size];
             Marshal.Copy(pReactions, unmarshaled, 0, size);
-            surfaceReactions = unmarshaled;
+            surfaceStresses = unmarshaled;
         }
     }
 }

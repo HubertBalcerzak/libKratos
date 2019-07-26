@@ -3,11 +3,13 @@ using System.Runtime.InteropServices;
 using LibKratos.Native;
 
 namespace LibKratos {
-    public class ModelPart {
+    public class ModelPart : IDisposable {
         private readonly IntPtr _nativeInstance;
+        public readonly KratosMesh KratosMesh;
 
         internal ModelPart(IntPtr nativeInstance) {
             _nativeInstance = nativeInstance;
+            KratosMesh = new KratosMesh(nativeInstance);
         }
 
 
@@ -86,6 +88,14 @@ namespace LibKratos {
             NativeModelPart.RetrieveResults(_nativeInstance);
         }
 
+        public ModelPart CreateSubModelPart(string name) {
+            return new ModelPart(NativeModelPart.CreateSubmodelPart(_nativeInstance, name));
+        }
+
+        public void RecreateProcessedMesh() {
+            NativeModelPart.RecreateProcessedMesh(_nativeInstance);
+        }
+
         public bool HasSubmodelPart(string name) {
             return NativeModelPart.HasSubmodelPart(_nativeInstance, name);
         }
@@ -94,7 +104,7 @@ namespace LibKratos {
             return new ModelPart(NativeModelPart.GetSubmodelPart(_nativeInstance, name));
         }
 
-        public void DisposeSubmodelPart() {
+        public void Dispose() {
             NativeModelPart.DisposeModelPartWrapper(_nativeInstance);
         }
     }

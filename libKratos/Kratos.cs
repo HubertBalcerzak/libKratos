@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using LibKratos.Native;
 
 namespace LibKratos {
-    public class Kratos {
+    public class Kratos: IDisposable {
         public ModelPart MainModelPart { get; private set; }
 
         private readonly IntPtr _nativeInstance;

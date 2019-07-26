@@ -44,6 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Kratos.cs" />
+    <Compile Include="KratosCondition.cs" />
+    <Compile Include="KratosElement.cs" />
+    <Compile Include="KratosMesh.cs" />
+    <Compile Include="KratosNode.cs" />
     <Compile Include="ModelPart.cs" />
     <Compile Include="Native\NativeKratos.cs" />
     <Compile Include="Native\NativeModelPart.cs" />

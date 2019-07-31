@@ -4,7 +4,7 @@ namespace LibKratos {
     public class KratosCondition {
         private readonly IntPtr _nativeInstance;
 
-        public KratosCondition(IntPtr nativeInstance) {
+        internal KratosCondition(IntPtr nativeInstance) {
             _nativeInstance = nativeInstance;
         }
     }

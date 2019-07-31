@@ -8,7 +8,7 @@ namespace LibKratos {
         private readonly IntPtr _nativeInstance;
 
         public Kratos() {
-            _nativeInstance = NativeKratos.CreateInstance();
+            _nativeInstance = NativeKratos.Kratos_CreateInstance();
         }
 
         /// <summary>
@@ -17,8 +17,8 @@ namespace LibKratos {
         /// <param name="mdpaPath">Path to the .mdpa model file.</param>
         /// <param name="parametersJsonPath">Path to the ProjectParameters.json file.</param>
         public void Init(string mdpaPath, string parametersJsonPath) {
-            NativeKratos.Init(_nativeInstance, mdpaPath, parametersJsonPath);
-            MainModelPart = new ModelPart(NativeKratos.GetRootModelPart(_nativeInstance));
+            NativeKratos.Kratos_Init(_nativeInstance, mdpaPath, parametersJsonPath);
+            MainModelPart = new ModelPart(NativeKratos.Kratos_GetRootModelPart(_nativeInstance));
         }
 
         /// <summary>
@@ -26,8 +26,8 @@ namespace LibKratos {
         /// </summary>
         /// <param name="mdpaPath">Path to the .mdpa model file.</param>
         public void InitWithMdpa(string mdpaPath) {
-            NativeKratos.InitWithMDPA(_nativeInstance, mdpaPath);
-            MainModelPart = new ModelPart(NativeKratos.GetRootModelPart(_nativeInstance));
+            NativeKratos.Kratos_InitWithMDPA(_nativeInstance, mdpaPath);
+            MainModelPart = new ModelPart(NativeKratos.Kratos_GetRootModelPart(_nativeInstance));
 
         }
 
@@ -37,8 +37,8 @@ namespace LibKratos {
         /// </summary>
         /// <param name="parametersJsonPath">Path to the ProjectParameters.json file.</param>
         public void InitWithSettings(string parametersJsonPath) {
-            NativeKratos.InitWithSettings(_nativeInstance, parametersJsonPath);
-            MainModelPart = new ModelPart(NativeKratos.GetRootModelPart(_nativeInstance));
+            NativeKratos.Kratos_InitWithSettings(_nativeInstance, parametersJsonPath);
+            MainModelPart = new ModelPart(NativeKratos.Kratos_GetRootModelPart(_nativeInstance));
 
         }
 
@@ -47,11 +47,11 @@ namespace LibKratos {
         /// Executes simulation. Result can be retrieved with <see cref="GetNodesPos" /> and <see cref="GetSurfaceStress"/> methods.
         /// </summary>
         public void Calculate() {
-            NativeKratos.Calculate(_nativeInstance);
+            NativeKratos.Kratos_Calculate(_nativeInstance);
         }
 
         public void Dispose() {
-            NativeKratos.DisposeKratos(_nativeInstance);
+            NativeKratos.Kratos_DisposeKratos(_nativeInstance);
         }
     }
 }

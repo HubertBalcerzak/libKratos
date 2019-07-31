@@ -17,7 +17,7 @@ namespace LibKratos {
         /// Sets Kratos DISPLACEMENT variable for node with given id, so that its final position is equal to given xyz coordinates.
         /// </summary>
         public void UpdateNodePos(int nodeId, float x, float y, float z) {
-            NativeModelPart.UpdateNodePos(_nativeInstance, nodeId, x, y, z);
+            NativeModelPart.ModelPartWrapper_UpdateNodePos(_nativeInstance, nodeId, x, y, z);
         }
 
 
@@ -28,11 +28,11 @@ namespace LibKratos {
         /// Coordinates of first node are (xCoordinates[0], yCoordinates[0], zCoordinates[0]).
         /// </remarks>
         public void GetNodesPos(out float[] xCoordinates, out float[] yCoordinates, out float[] zCoordinates) {
-            IntPtr pxValues = NativeModelPart.GetXCoordinates(_nativeInstance);
-            IntPtr pyValues = NativeModelPart.GetYCoordinates(_nativeInstance);
-            IntPtr pzValues = NativeModelPart.GetZCoordinates(_nativeInstance);
+            IntPtr pxValues = NativeModelPart.ModelPartWrapper_GetXCoordinates(_nativeInstance);
+            IntPtr pyValues = NativeModelPart.ModelPartWrapper_GetYCoordinates(_nativeInstance);
+            IntPtr pzValues = NativeModelPart.ModelPartWrapper_GetZCoordinates(_nativeInstance);
 
-            int size = NativeModelPart.GetNodesCount(_nativeInstance);
+            int size = NativeModelPart.ModelPartWrapper_GetNodesCount(_nativeInstance);
             float[] xResult = new float[size];
             float[] yResult = new float[size];
             float[] zResult = new float[size];
@@ -51,8 +51,8 @@ namespace LibKratos {
         /// Copies triangles of Kratos model into given array. Result length will always be a multiple of 3.
         /// </summary>
         public void GetTriangles(out int[] triangles) {
-            IntPtr pTriangles = NativeModelPart.GetTriangles(_nativeInstance);
-            int size = NativeModelPart.GetTrianglesCount(_nativeInstance);
+            IntPtr pTriangles = NativeModelPart.ModelPartWrapper_GetTriangles(_nativeInstance);
+            int size = NativeModelPart.ModelPartWrapper_GetTrianglesCount(_nativeInstance);
 
             int[] unmarshaled = new int[size * 3];
 
@@ -66,7 +66,7 @@ namespace LibKratos {
         /// It can be then retrieved using <see cref="GetSurfaceStress"/> method
         /// </summary>
         public void EnableSurfaceStressResults() {
-            NativeModelPart.EnableSurfaceStressResults(_nativeInstance);
+            NativeModelPart.ModelPartWrapper_EnableSurfaceStressResults(_nativeInstance);
         }
 
 
@@ -77,35 +77,35 @@ namespace LibKratos {
         /// </summary>
         /// <param name="surfaceStresses">Results array.</param>
         public void GetSurfaceStress(out float[] surfaceStresses) {
-            IntPtr pReactions = NativeModelPart.GetSurfaceStress(_nativeInstance);
-            int size = NativeModelPart.GetTrianglesCount(_nativeInstance);
+            IntPtr pReactions = NativeModelPart.ModelPartWrapper_GetSurfaceStress(_nativeInstance);
+            int size = NativeModelPart.ModelPartWrapper_GetTrianglesCount(_nativeInstance);
             float[] unmarshaled = new float[size];
             Marshal.Copy(pReactions, unmarshaled, 0, size);
             surfaceStresses = unmarshaled;
         }
 
         public void RetrieveResults() {
-            NativeModelPart.RetrieveResults(_nativeInstance);
+            NativeModelPart.ModelPartWrapper_RetrieveResults(_nativeInstance);
         }
 
         public ModelPart CreateSubModelPart(string name) {
-            return new ModelPart(NativeModelPart.CreateSubmodelPart(_nativeInstance, name));
+            return new ModelPart(NativeModelPart.ModelPartWrapper_CreateSubmodelPart(_nativeInstance, name));
         }
 
         public void RecreateProcessedMesh() {
-            NativeModelPart.RecreateProcessedMesh(_nativeInstance);
+            NativeModelPart.ModelPartWrapper_RecreateProcessedMesh(_nativeInstance);
         }
 
         public bool HasSubmodelPart(string name) {
-            return NativeModelPart.HasSubmodelPart(_nativeInstance, name);
+            return NativeModelPart.ModelPartWrapper_HasSubmodelPart(_nativeInstance, name);
         }
 
         public ModelPart GetSubmodelPart(string name) {
-            return new ModelPart(NativeModelPart.GetSubmodelPart(_nativeInstance, name));
+            return new ModelPart(NativeModelPart.ModelPartWrapper_GetSubmodelPart(_nativeInstance, name));
         }
 
         public void Dispose() {
-            NativeModelPart.DisposeModelPartWrapper(_nativeInstance);
+            NativeModelPart.ModelPartWrapper_DisposeModelPartWrapper(_nativeInstance);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace LibKratos {
     public class KratosElement {
         private readonly IntPtr _nativeInstance;
 
-        public KratosElement(IntPtr nativeInstance) {
+        internal KratosElement(IntPtr nativeInstance) {
             _nativeInstance = nativeInstance;
         }
     }

@@ -61,6 +61,7 @@ namespace LibKratos.Native {
         [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr ModelPartWrapper_CreateNew2dCondition(IntPtr instance,
             [MarshalAs(UnmanagedType.LPStr)] string name,
+            int id,
             [MarshalAs(UnmanagedType.LPArray)] int[] nodeIds);
 
         [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]

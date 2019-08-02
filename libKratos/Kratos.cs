@@ -2,7 +2,10 @@
 using LibKratos.Native;
 
 namespace LibKratos {
-    public class Kratos: IDisposable {
+    /// <summary>
+    /// Instance of Kratos. Before using initialize with <see cref="Init"/>, <see cref="InitWithMdpa"/> or <see cref="InitWithSettings"/>
+    /// </summary>
+    public class Kratos : IDisposable {
         public ModelPart MainModelPart { get; private set; }
 
         private readonly IntPtr _nativeInstance;
@@ -28,7 +31,6 @@ namespace LibKratos {
         public void InitWithMdpa(string mdpaPath) {
             NativeKratos.Kratos_InitWithMDPA(_nativeInstance, mdpaPath);
             MainModelPart = new ModelPart(NativeKratos.Kratos_GetRootModelPart(_nativeInstance));
-
         }
 
 
@@ -39,13 +41,15 @@ namespace LibKratos {
         public void InitWithSettings(string parametersJsonPath) {
             NativeKratos.Kratos_InitWithSettings(_nativeInstance, parametersJsonPath);
             MainModelPart = new ModelPart(NativeKratos.Kratos_GetRootModelPart(_nativeInstance));
-
         }
 
 
         /// <summary>
-        /// Executes simulation. Result can be retrieved with <see cref="GetNodesPos" /> and <see cref="GetSurfaceStress"/> methods.
+        /// Executes simulation and frees all fixed nodes.
         /// </summary>
+        /// <seealso cref="ModelPart.RetrieveResults"/>
+        /// <seealso cref="ModelPart.GetNodesPos"/>
+        /// <seealso cref="ModelPart.GetSurfaceStress"/>
         public void Calculate() {
             NativeKratos.Kratos_Calculate(_nativeInstance);
         }

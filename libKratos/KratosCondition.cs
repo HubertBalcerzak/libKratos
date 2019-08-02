@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 using LibKratos.Native;
 
 namespace LibKratos {
+    /// <summary>
+    /// Wrapper over native Kratos Condition class
+    /// </summary>
     public class KratosCondition {
         private readonly IntPtr _nativeInstance;
         public int Id { get; }
@@ -13,6 +16,8 @@ namespace LibKratos {
             Id = NativeCondition.Condition_Id(nativeInstance);
         }
 
+
+        /// <returns>Array of <see cref="KratosNode"/> in this condition</returns>
         public KratosNode[] GetNodes() {
             IntPtr pNodes = NativeCondition.Condition_Nodes(_nativeInstance);
             int size = 3; //TODO support different condition sizes

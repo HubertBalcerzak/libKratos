@@ -27,5 +27,28 @@ namespace LibKratos {
             Marshal.Copy(pNodes, unmarshaled, 0, size);
             return unmarshaled.Select(x => new KratosNode(x)).ToArray();
         }
+        
+        public bool HasVariable1d(Variable1d variable1d) {
+            return variable1d.VariableType == VariableType.Standard
+                ? NativeElement.Element_HasVariable1d(_nativeInstance, variable1d.NativeVariable)
+                : NativeElement.Element_HasVariableComponent(_nativeInstance, variable1d.NativeVariable);
+        }
+
+        public bool HasVariable3d(Variable3d variable3d) {
+            return NativeElement.Element_HasVariable3d(_nativeInstance, variable3d.NativeVariable);
+        }
+
+        public double GetVariable1d(Variable1d variable1d) {
+            return variable1d.VariableType == VariableType.Standard
+                ? NativeElement.Element_GetVariable1d(_nativeInstance, variable1d.NativeVariable)
+                : NativeElement.Element_GetVariableComponent(_nativeInstance, variable1d.NativeVariable);
+        }
+
+        public double[] GetVariable3d(Variable3d variable3d) {
+            IntPtr values = NativeElement.Element_GetVariable3d(_nativeInstance, variable3d.NativeVariable);
+            double[] unmarshalledResults = Utils.Utils.UnmarshalNativeDoubles(values, 3);
+            NativeUtilities.Utils_FreeDoubleArray(values);
+            return unmarshalledResults;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using LibKratos.Native;
 
 namespace LibKratos {
@@ -51,6 +52,29 @@ namespace LibKratos {
         internal KratosNode(IntPtr nativeInstance) {
             _nativeInstance = nativeInstance;
             Id = NativeNode.Node_Id(nativeInstance);
+        }
+
+        public bool HasVariable1d(Variable1d variable1d) {
+            return variable1d.VariableType == VariableType.Standard
+                ? NativeNode.Node_HasVariable1d(_nativeInstance, variable1d.NativeVariable)
+                : NativeNode.Node_HasVariableComponent(_nativeInstance, variable1d.NativeVariable);
+        }
+
+        public bool HasVariable3d(Variable3d variable3d) {
+            return NativeNode.Node_HasVariable3d(_nativeInstance, variable3d.NativeVariable);
+        }
+
+        public double GetVariable1d(Variable1d variable1d) {
+            return variable1d.VariableType == VariableType.Standard
+                ? NativeNode.Node_GetVariable1d(_nativeInstance, variable1d.NativeVariable)
+                : NativeNode.Node_GetVariableComponent(_nativeInstance, variable1d.NativeVariable);
+        }
+
+        public double[] GetVariable3d(Variable3d variable3d) {
+            IntPtr values = NativeNode.Node_GetVariable3d(_nativeInstance, variable3d.NativeVariable);
+            double[] unmarshalledResults = Utils.Utils.UnmarshalNativeDoubles(values, 3);
+            NativeUtilities.Utils_FreeDoubleArray(values);
+            return unmarshalledResults;
         }
     }
 }

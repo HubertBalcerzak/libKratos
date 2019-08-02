@@ -8,5 +8,23 @@ namespace LibKratos.Native {
 
         [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr Condition_Nodes(IntPtr instance);
+        
+        [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern bool Condition_HasVariable1d(IntPtr instance, IntPtr variable);
+
+        [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern bool Condition_HasVariableComponent(IntPtr instance, IntPtr variable);
+
+        [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern bool Condition_HasVariable3d(IntPtr instance, IntPtr variable);
+
+        [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern double Condition_GetVariable1d(IntPtr instance, IntPtr variable);
+
+        [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern double Condition_GetVariableComponent(IntPtr instance, IntPtr variable);
+
+        [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern IntPtr Condition_GetVariable3d(IntPtr instance, IntPtr variable);
     }
 }

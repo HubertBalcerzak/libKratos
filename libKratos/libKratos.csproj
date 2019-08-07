@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IdTranslator.cs" />
     <Compile Include="IVariable.cs" />
     <Compile Include="Kratos.cs" />
     <Compile Include="KratosCondition.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="ModelPart.cs" />
     <Compile Include="Native\NativeCondition.cs" />
     <Compile Include="Native\NativeElement.cs" />
+    <Compile Include="Native\NativeIdTranslator.cs" />
     <Compile Include="Native\NativeKratos.cs" />
     <Compile Include="Native\NativeModelPart.cs" />
     <Compile Include="Native\NativeNode.cs" />

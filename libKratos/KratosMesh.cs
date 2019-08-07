@@ -6,7 +6,8 @@ using LibKratos.Native;
 namespace LibKratos {
     /// <summary>
     /// Provides tools for internal kratos mesh modifications. Note, that Ids used here are native for Kratos and
-    /// different from those used in <see cref="ModelPart"/> class. 
+    /// different from those used in <see cref="ModelPart"/> class.
+    /// <seealso cref="IdTranslator"/>
     /// </summary>
     public class KratosMesh {
         private readonly IntPtr _nativeModelPartInstance;
@@ -70,6 +71,7 @@ namespace LibKratos {
         /// </summary>
         /// <param name="id">Kratos id of node to find. Note, that this is different from ids used in <see cref="ModelPart"/> class</param>
         /// <returns><see cref="KratosNode"/> with given id</returns>
+        /// <seealso cref="IdTranslator"/>
         public KratosNode GetNode(int id) {
             return new KratosNode(NativeModelPart.ModelPartWrapper_GetNode(_nativeModelPartInstance, id));
         }

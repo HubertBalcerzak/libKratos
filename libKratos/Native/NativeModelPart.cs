@@ -123,5 +123,8 @@ namespace LibKratos.Native {
 
         [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern void ModelPartWrapper_DisposeModelPartWrapper(IntPtr instance);
+        
+        [DllImport("KratosCSharpWrapperCore.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern IntPtr ModelPartWrapper_GetIdTranslator(IntPtr instance);
     }
 }

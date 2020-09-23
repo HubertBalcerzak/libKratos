@@ -11,9 +11,12 @@ namespace LibKratos {
         /// </summary>
         public readonly KratosMesh KratosMesh;
 
+        public readonly IdTranslator IdTranslator;
+
         internal ModelPart(IntPtr nativeInstance) {
             _nativeInstance = nativeInstance;
             KratosMesh = new KratosMesh(nativeInstance);
+            IdTranslator = new IdTranslator(NativeModelPart.ModelPartWrapper_GetIdTranslator(nativeInstance));
         }
 
 
